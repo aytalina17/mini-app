@@ -1,21 +1,615 @@
-<!doctype html>
-<html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/mini-app/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-    <title>lapochka</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
-      rel="stylesheet"
-    />
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script type="module" crossorigin src="/mini-app/assets/index-Pc2HoAKO.js"></script>
-    <link rel="stylesheet" crossorigin href="/mini-app/assets/index-BRpXQuJ0.css">
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;family=Geist:wght@600;700&amp;display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+  body { margin: 0; background: rgb(238,238,238); }
+  a { color: rgb(254,121,98); }
+  a:hover { color: rgb(238,110,88); }
+</style>
+</helmet>
+
+<div style="display:flex; justify-content:center; padding:32px 0; font-family:Montserrat,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+<div style="position:relative; width:393px; height:852px; background:rgb(255,255,255); overflow:hidden; border-radius:28px; box-shadow:0 20px 60px rgba(0,0,0,0.18);">
+
+  <div style="position:absolute; inset:0; overflow-y:auto; -webkit-overflow-scrolling:touch;">
+  <!-- HERO -->
+  <div style="position:relative; width:393px; height:564px; overflow:hidden; background:rgb(57,56,56);">
+    <img src="assets/hero-bg.png" alt="" style="position:absolute; left:-8px; top:-59px; width:409px; height:712px; object-fit:cover; object-position:48% 82%;">
+    <div style="position:absolute; left:19px; top:60px; width:355px; text-align:center;">
+      <div style="position:relative; display:inline-block;">
+        <span style="position:relative; display:block; font-weight:700; font-size:64px; line-height:0.91; letter-spacing:-0.02em; color:rgb(255,255,255);">Найди<br>lapochka</span>
+      </div>
+    </div>
+    <img src="assets/bottle.png" alt="Персик + Вербена" style="position:absolute; left:156px; top:161px; width:137px; height:354px; object-fit:cover; transform:rotate(8.62deg); transform-origin:0 0; box-shadow:0 4px 4px rgba(0,0,0,0.12); border-radius:6px;">
+  </div>
+
+  <!-- SHEET -->
+  <div style="position:relative; width:393px; border-radius:32px 32px 0 0; background:rgb(255,255,255); display:flex; flex-direction:column; gap:40px; padding:24px 16px 24px 16px; box-sizing:border-box; margin-top:-24px;">
+
+    <!-- Mission of the day -->
+    <button onclick="{{ openSheet }}" style="all:unset; cursor:pointer; position:relative; height:148px; border-radius:24px; background:rgb(245,244,244); overflow:hidden; flex-shrink:0;">
+      <div style="position:absolute; left:20px; top:16px; width:207px; display:flex; flex-direction:column; gap:4px; align-items:flex-start; text-align:left;">
+        <span style="font-weight:600; font-size:20px; line-height:1.2; letter-spacing:-0.02em; color:rgb(57,56,56);">Миссия дня</span>
+        <span style="width:168px; font-weight:400; font-size:14px; line-height:1.45; letter-spacing:-0.01em; color:rgb(105,105,105);">Проверь наличие вкусов Лапочки</span>
+      </div>
+      <div style="position:absolute; left:20px; top:102px; padding:4px 12px; border-radius:32px; background:rgb(254,121,98);">
+        <span style="font-weight:600; font-size:14px; line-height:1.45; letter-spacing:-0.01em; color:rgb(255,255,255);">35:02</span>
+      </div>
+      <img src="assets/vec-question.png" alt="" style="position:absolute; left:196px; top:-19px; width:169px; height:178px; opacity:0.94; object-fit:contain;">
+      <span style="position:absolute; left:246px; top:46px; font-family:Geist,Montserrat,sans-serif; font-weight:700; font-size:52px; letter-spacing:-0.02em; color:rgb(255,255,255);">?</span>
+    </button>
+
+    <!-- Flavors -->
+    <div style="display:flex; flex-direction:column; gap:24px;">
+      <div style="display:flex; flex-direction:row; justify-content:space-between; align-items:center;">
+        <span style="font-weight:600; font-size:20px; line-height:1.2; letter-spacing:-0.02em; color:rgb(57,56,56);">Что попробуем сегодня?</span>
+        <button onclick="{{ openCatalog }}" style="all:unset; cursor:pointer; width:28px; height:28px; border-radius:34px; background:rgb(245,244,244); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <img src="assets/vec-arrow.svg" alt="назад" style="width:8px; height:14px; transform:rotate(180deg);">
+        </button>
+      </div>
+      <div style="display:flex; flex-direction:row; gap:8px; overflow-x:auto; align-items:center; padding-bottom:2px;">
+        <sc-for list="{{ flavors }}" as="flavor" hint-placeholder-count="6">
+          <div style="position:relative; width:176.5px; height:212px; flex-shrink:0; border-radius:16px; overflow:hidden; display:flex; flex-direction:row; justify-content:space-between; align-items:flex-end; padding:12px; box-sizing:border-box; background-image:linear-gradient(202.932deg, rgba(255,255,255,0) 29.75%, rgba(0,0,0,0.35) 75.02%), url({{ flavor.img }}); background-size:cover; background-position:center;">
+            <span style="width:124px; font-weight:700; font-size:16px; line-height:1.2; letter-spacing:-0.01em; color:rgb(255,255,255); white-space:pre-line;">{{ flavor.name }}</span>
+            <div style="width:40px; height:40px; border-radius:100%; background:rgb(255,255,255); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+              <img src="assets/card-icon.png" alt="" style="width:20px; height:20px; object-fit:contain;">
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- Map -->
+    <div style="display:flex; flex-direction:column; gap:24px;">
+      <span style="font-weight:600; font-size:20px; line-height:1.2; letter-spacing:-0.02em; color:rgb(57,56,56);">Карта находок</span>
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div onclick="{{ openMap }}" style="position:relative; height:226px; border-radius:24px; overflow:hidden; background-image:url(assets/map.png); background-size:cover; background-position:59% 52%; cursor:pointer;">
+          <img src="assets/strip-peach.png" alt="" style="position:absolute; left:20px; top:130px; width:66px; height:66px; object-fit:contain;">
+          <img src="assets/strip-pineapple.png" alt="" style="position:absolute; left:150px; top:36px; width:66px; height:66px; object-fit:contain;">
+          <img src="assets/strip-grapefruit.png" alt="" style="position:absolute; left:260px; top:120px; width:66px; height:66px; object-fit:contain;">
+          <img src="assets/strip-olive.png" alt="" style="position:absolute; left:90px; top:160px; width:66px; height:66px; object-fit:contain;">
+          <img src="assets/strip-mango.png" alt="" style="position:absolute; left:290px; top:30px; width:66px; height:66px; object-fit:contain;">
+        </div>
+        <button style="all:unset; box-sizing:border-box; cursor:pointer; height:64px; border-radius:100px; background:rgb(255,232,226); display:flex; align-items:center; justify-content:center;">
+          <span style="font-weight:600; font-size:16px; letter-spacing:-0.01em; color:rgb(254,121,98);">Найти рядом</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Gallery -->
+    <div style="display:flex; flex-direction:column; gap:24px; padding-bottom:96px;">
+      <span style="font-weight:600; font-size:20px; line-height:1.2; letter-spacing:-0.02em; color:rgb(57,56,56);">Моменты с Лапочкой</span>
+
+      <sc-if value="{{ isMasonry }}" hint-placeholder-val="{{ true }}">
+        <div style="display:grid; grid-template-columns:repeat(3,1fr); grid-auto-rows:115px; gap:5px;">
+          <div style="border-radius:24px; background:rgb(255,232,226); outline:2px dashed rgb(254,121,98); outline-offset:-2px; display:flex; flex-direction:column; gap:6px; align-items:center; justify-content:center;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 5V19M5 12H19" stroke="rgb(254,121,98)" stroke-width="1.5" stroke-linecap="round"></path></svg>
+            <span style="font-weight:600; font-size:14px; letter-spacing:-0.01em; color:rgb(254,121,98); text-align:center; white-space:pre-line; position:relative; top:2px;">Добавить
+фото</span>
+          </div>
+          <sc-for list="{{ gallery }}" as="photo" hint-placeholder-count="8">
+            <div style="border-radius:20px; overflow:hidden; grid-row:{{ photo.span }}; background-image:url({{ photo.img }}); background-size:cover; background-position:center;"></div>
+          </sc-for>
+        </div>
+      </sc-if>
+      <sc-if value="{{ isGrid }}" hint-placeholder-val="{{ false }}">
+        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:8px;">
+          <div style="aspect-ratio:1; border-radius:24px; background:rgb(255,232,226); outline:2px dashed rgb(254,121,98); outline-offset:-2px; display:flex; flex-direction:column; gap:6px; align-items:center; justify-content:center;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 5V19M5 12H19" stroke="rgb(254,121,98)" stroke-width="1.5" stroke-linecap="round"></path></svg>
+            <span style="font-weight:600; font-size:13px; letter-spacing:-0.01em; color:rgb(254,121,98);">Добавить фото</span>
+          </div>
+          <sc-for list="{{ gallery }}" as="photo" hint-placeholder-count="8">
+            <div style="aspect-ratio:1; border-radius:20px; overflow:hidden; background-image:url({{ photo.img }}); background-size:cover; background-position:center;"></div>
+          </sc-for>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <div style="position:absolute; left:50%; transform:translateX(-50%); bottom:16px; width:333px; height:76px; border-radius:100px; background:rgb(255,255,255); box-shadow:0 0 14px rgba(122,155,187,0.27); display:flex; flex-direction:row; padding:8px 12px; justify-content:space-between; align-items:center; box-sizing:border-box; z-index:10;">
+    <button onclick="{{ goHome }}" style="all:unset; cursor:pointer; width:56px; height:56px; border-radius:100px; display:flex; align-items:center; justify-content:center;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 10.5L12 3l9 7.5M5 9.5V20a1 1 0 001 1h4v-6h4v6h4a1 1 0 001-1V9.5" stroke="rgb(57,56,56)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+    </button>
+    <button onclick="{{ openMap }}" style="all:unset; cursor:pointer; width:56px; height:56px; border-radius:100px; display:flex; align-items:center; justify-content:center;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 4L3 6.5v14L9 18l6 2.5 6-2.5v-14l-6 2.5L9 4z" stroke="rgb(166,165,164)" stroke-width="1.6" stroke-linejoin="round"></path><path d="M9 4v14M15 6.5v14" stroke="rgb(166,165,164)" stroke-width="1.6"></path></svg>
+    </button>
+    <button onclick="{{ openSheet }}" style="all:unset; cursor:pointer; width:60px; align-self:stretch; border-radius:100px; background:rgb(254,121,98); display:flex; align-items:center; justify-content:center;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 5V19M5 12H19" stroke="rgb(255,255,255)" stroke-width="1.8" stroke-linecap="round"></path></svg>
+    </button>
+    <button onclick="{{ openTasks }}" style="all:unset; cursor:pointer; width:56px; height:56px; border-radius:100px; display:flex; align-items:center; justify-content:center;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="8" height="8" rx="2" stroke="rgb(166,165,164)" stroke-width="1.6"></rect><rect x="13" y="3" width="8" height="8" rx="2" stroke="rgb(166,165,164)" stroke-width="1.6"></rect><rect x="3" y="13" width="8" height="8" rx="2" stroke="rgb(166,165,164)" stroke-width="1.6"></rect><rect x="13" y="13" width="8" height="8" rx="2" stroke="rgb(166,165,164)" stroke-width="1.6"></rect></svg>
+    </button>
+    <button onclick="{{ openProfile }}" style="all:unset; cursor:pointer; width:56px; height:56px; border-radius:100px; display:flex; align-items:center; justify-content:center;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="rgb(166,165,164)" stroke-width="1.6"></circle><path d="M4 20c0-3.5 3.5-6 8-6s8 2.5 8 6" stroke="rgb(166,165,164)" stroke-width="1.6" stroke-linecap="round"></path></svg>
+    </button>
+  </div>
+
+  <!-- MAP PAGE (slides in from the right, 393x852) -->
+  <div style="{{ mapPanelWrapStyle }}">
+    <div style="position:absolute; left:0; top:0; width:393px; height:852px; overflow:hidden; background-image:linear-gradient(rgba(0,0,0,0.03),rgba(0,0,0,0.03)), url(assets/map-bg-full.png); background-size:242.516% 127.972%; background-position:27.008% 65.974%; background-repeat:no-repeat;">
+
+      <div style="position:absolute; left:16px; top:32px; width:361px; height:48px; display:flex; flex-direction:row; justify-content:space-between; align-items:center;">
+        <button onclick="{{ closeMap }}" style="all:unset; cursor:pointer; width:48px; height:48px; border-radius:100px; background:rgb(255,255,255); box-shadow:0 0 24px rgba(52,52,52,0.15); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <img src="assets/icon-search2.svg" alt="" style="width:18.8px; height:19.7px;">
+        </button>
+        <div style="width:187px; height:48px; border-radius:100px; background:rgb(255,255,255); box-shadow:0 0 24px rgba(52,52,52,0.15); display:flex; flex-direction:row; gap:3px; padding:4px; align-items:center; box-sizing:border-box;">
+          <div style="width:88px; align-self:stretch; border-radius:100px; background:rgb(244,239,239); display:flex; align-items:center; justify-content:center;">
+            <span style="font-family:Montserrat; font-weight:500; font-size:16px; line-height:1; color:rgb(0,0,0);">Карта</span>
+          </div>
+          <div style="width:88px; align-self:stretch; border-radius:10px; background:rgb(255,255,255); display:flex; align-items:center; justify-content:center;">
+            <span style="font-family:Montserrat; font-weight:500; font-size:16px; line-height:1; color:rgb(0,0,0);">Отметки</span>
+          </div>
+        </div>
+        <div style="width:48px; height:48px; border-radius:100px; background:rgb(255,255,255); box-shadow:0 0 24px rgba(52,52,52,0.15); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <img src="assets/icon-filter2.svg" alt="" style="width:13.1px; height:12.4px;">
+        </div>
+      </div>
+
+      <!-- marker +5 -->
+      <sc-if value="{{ mapShowAll }}" hint-placeholder-val="{{ true }}">
+      <div style="position:absolute; left:295px; top:432px; width:72px; height:72px;">
+        <img src="assets/map-marker-mango-5.png" alt="" style="position:absolute; left:0; top:0; width:100%; height:100%; object-fit:contain;">
+      </div>
+      </sc-if>
+
+      <!-- marker cluster 16 / +4 (grapefruit) -->
+      <div onclick="{{ toggleGrapefruitFilter }}" style="position:absolute; left:44.082px; top:213px; width:78px; height:78px; cursor:pointer;">
+        <img src="assets/map-marker-grapefruit-4.png" alt="" style="position:absolute; left:0; top:0; width:100%; height:100%; object-fit:contain;">
+      </div>
+
+      <!-- marker +7 -->
+      <sc-if value="{{ mapShowAll }}" hint-placeholder-val="{{ true }}">
+      <div style="position:absolute; left:291.75px; top:209.016px; width:58.95px; height:70px;">
+        <div style="position:absolute; left:0; top:0; width:58.95px; height:70px; background-color:rgb(255,255,255); box-shadow:0 0 2.164px rgba(0,0,0,0.1); -webkit-mask-image:url(assets/map-m7-bg.svg); mask-image:url(assets/map-m7-bg.svg); -webkit-mask-size:100% 100%; mask-size:100% 100%; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;"></div>
+        <div style="position:absolute; left:7.368px; top:7.367px; width:44.211px; height:55.263px; background-color:rgb(180,201,110); -webkit-mask-image:url(assets/map-m7-fruit.svg); mask-image:url(assets/map-m7-fruit.svg); -webkit-mask-size:100% 100%; mask-size:100% 100%; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;"></div>
+        <div style="position:absolute; left:32.25px; top:49.984px; width:25px; height:25px; border-radius:14.18px; background:rgb(255,255,255); display:flex; align-items:center; justify-content:center;">
+          <span style="font-family:Montserrat; font-weight:500; font-size:14px; letter-spacing:-0.02em; color:rgb(0,0,0);">+7</span>
+        </div>
+      </div>
+      </sc-if>
+
+      <!-- marker +6 -->
+      <sc-if value="{{ mapShowAll }}" hint-placeholder-val="{{ true }}">
+      <div style="position:absolute; left:44.543px; top:525px; width:70px; height:70px;">
+        <img src="assets/map-marker-peach-6.png" alt="" style="position:absolute; left:0; top:0; width:100%; height:100%; object-fit:contain;">
+      </div>
+      </sc-if>
+
+      <!-- mission marker -->
+      <sc-if value="{{ mapShowAll }}" hint-placeholder-val="{{ true }}">
+      <div onclick="{{ openSheet }}" style="position:absolute; left:158px; top:358px; width:77.618px; height:87.501px; cursor:pointer;">
+        <img src="assets/map-mission-watermelon.png" alt="" style="position:absolute; left:0; top:0; width:100%; height:100%; object-fit:contain;">
+      </div>
+      </sc-if>
+
+      <!-- location button -->
+      <div style="position:absolute; left:329px; top:551px; width:48px; height:48px; border-radius:100px; background:rgb(255,255,255); box-shadow:0 0 24px rgba(52,52,52,0.15); display:flex; align-items:center; justify-content:center;">
+        <img src="assets/icon-location2.svg" alt="" style="width:19.2px; height:19.2px;">
+      </div>
+
+      <!-- bottom fruit strip -->
+      <div style="position:absolute; left:0px; top:670px; width:393px; height:70px; display:flex; flex-direction:row; gap:14px; align-items:center; justify-content:center; overflow:hidden;">
+        <sc-for list="{{ mapStrip }}" as="item" hint-placeholder-count="5">
+          <div style="position:relative; width:64px; height:64px; flex-shrink:0; border-radius:16px; overflow:hidden;">
+            <img src="{{ item.img }}" alt="" style="position:absolute; left:0; top:0; width:100%; height:100%; object-fit:contain;">
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- BOTTOM NAV -->
+    <div style="position:absolute; left:50%; transform:translateX(-50%); bottom:16px; width:333px; height:76px; border-radius:100px; background:rgb(255,255,255); box-shadow:0 0 14px rgba(122,155,187,0.27); display:flex; flex-direction:row; padding:8px 12px; justify-content:space-between; align-items:center; box-sizing:border-box;">
+      <button onclick="{{ goHome }}" style="all:unset; cursor:pointer; width:56px; height:56px; border-radius:100px; display:flex; align-items:center; justify-content:center;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 10.5L12 3l9 7.5M5 9.5V20a1 1 0 001 1h4v-6h4v6h4a1 1 0 001-1V9.5" stroke="rgb(166,165,164)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </button>
+      <div style="width:56px; height:56px; border-radius:100px; display:flex; align-items:center; justify-content:center;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 4L3 6.5v14L9 18l6 2.5 6-2.5v-14l-6 2.5L9 4z" stroke="rgb(57,56,56)" stroke-width="1.6" stroke-linejoin="round"></path><path d="M9 4v14M15 6.5v14" stroke="rgb(57,56,56)" stroke-width="1.6"></path></svg>
+      </div>
+      <button onclick="{{ openSheet }}" style="all:unset; cursor:pointer; width:60px; align-self:stretch; border-radius:100px; background:rgb(254,121,98); display:flex; align-items:center; justify-content:center;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 5V19M5 12H19" stroke="rgb(255,255,255)" stroke-width="1.8" stroke-linecap="round"></path></svg>
+      </button>
+      <button onclick="{{ openTasks }}" style="all:unset; cursor:pointer; width:56px; height:56px; border-radius:100px; display:flex; align-items:center; justify-content:center;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="8" height="8" rx="2" stroke="rgb(166,165,164)" stroke-width="1.6"></rect><rect x="13" y="3" width="8" height="8" rx="2" stroke="rgb(166,165,164)" stroke-width="1.6"></rect><rect x="3" y="13" width="8" height="8" rx="2" stroke="rgb(166,165,164)" stroke-width="1.6"></rect><rect x="13" y="13" width="8" height="8" rx="2" stroke="rgb(166,165,164)" stroke-width="1.6"></rect></svg>
+      </button>
+      <button onclick="{{ openProfile }}" style="all:unset; cursor:pointer; width:56px; height:56px; border-radius:100px; display:flex; align-items:center; justify-content:center;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="rgb(166,165,164)" stroke-width="1.6"></circle><path d="M4 20c0-3.5 3.5-6 8-6s8 2.5 8 6" stroke="rgb(166,165,164)" stroke-width="1.6" stroke-linecap="round"></path></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- CATALOG PAGE (slides in from the right, 393x852) -->
+  <div style="{{ catalogPanelWrapStyle }}">
+    <div style="position:absolute; inset:0; overflow-y:auto; -webkit-overflow-scrolling:touch; background:rgb(255,255,255);">
+      <div style="position:relative; width:393px; height:649px; overflow:hidden;">
+        <video src="assets/catalog-hero.mp4" autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline" style="position:absolute; left:0; top:0; width:100%; height:100%; object-fit:cover;"></video>
+        <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 48%, rgba(0,0,0,0.55) 100%);"></div>
+        <div style="position:absolute; left:16px; top:389px; width:361px; display:flex; flex-direction:column; gap:24px;">
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            <span style="font-weight:700; font-size:32px; line-height:1.15; letter-spacing:-0.02em; color:rgb(255,255,255);">Новое жгучее сочетание</span>
+            <span style="font-weight:500; font-size:16px; line-height:1.45; letter-spacing:-0.01em; color:rgb(255,255,255);">Микс сладкого манго и жгучего чили для любителей необычных сочетаний</span>
+          </div>
+          <button style="all:unset; box-sizing:border-box; cursor:pointer; height:48px; border-radius:12px; background:rgb(255,255,255); display:flex; align-items:center; justify-content:center;">
+            <span style="font-weight:600; font-size:16px; letter-spacing:-0.01em; color:rgb(57,56,56);">Найди рядом</span>
+          </button>
+        </div>
+      </div>
+
+      <div style="position:relative; width:393px; border-radius:32px 32px 0 0; background:rgb(255,255,255); display:flex; flex-direction:column; gap:24px; padding:28px 16px 116px 16px; box-sizing:border-box; margin-top:-32px;">
+        <span style="font-weight:600; font-size:24px; line-height:1.2; letter-spacing:-0.02em; color:rgb(57,56,56);">Попробуйте больше вкусов</span>
+        <div style="display:flex; flex-direction:row; gap:4px; align-items:center; overflow-x:auto;">
+          <div style="flex-shrink:0; padding:8px 16px; border-radius:24px; background:rgb(254,121,98);"><span style="font-weight:600; font-size:16px; letter-spacing:-0.01em; color:rgb(255,255,255); white-space:nowrap;">Классика</span></div>
+          <div style="flex-shrink:0; padding:8px 16px; border-radius:24px;"><span style="font-weight:500; font-size:16px; letter-spacing:-0.01em; color:rgb(57,56,56); white-space:nowrap;">Ретро</span></div>
+          <div style="flex-shrink:0; padding:8px 16px; border-radius:24px;"><span style="font-weight:500; font-size:16px; letter-spacing:-0.01em; color:rgb(57,56,56); white-space:nowrap;">Коллаборации</span></div>
+          <div style="flex-shrink:0; padding:8px 16px; border-radius:24px;"><span style="font-weight:500; font-size:16px; letter-spacing:-0.01em; color:rgb(57,56,56); white-space:nowrap;">Вода</span></div>
+        </div>
+        <div style="display:flex; flex-direction:row; flex-wrap:wrap; gap:8px 8px;">
+          <sc-for list="{{ catalogCards }}" as="card" hint-placeholder-count="7">
+            <div style="position:relative; width:176.5px; height:212px; flex-shrink:0; border-radius:16px; overflow:hidden; display:flex; flex-direction:row; justify-content:space-between; align-items:flex-end; padding:12px; box-sizing:border-box; background-image:linear-gradient(202.932deg, rgba(255,255,255,0) 29.75%, rgba(0,0,0,0.35) 75.02%), url({{ card.img }}); background-size:cover; background-position:center;">
+              <span style="width:124px; font-weight:700; font-size:16px; line-height:1.2; letter-spacing:-0.01em; color:rgb(255,255,255); white-space:pre-line;">{{ card.name }}</span>
+              <div style="width:40px; height:40px; border-radius:100%; background:rgb(255,255,255); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                <img src="assets/card-icon.png" alt="" style="width:20px; height:20px; object-fit:contain;">
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+
+    <button onclick="{{ closeCatalog }}" style="all:unset; cursor:pointer; position:absolute; left:16px; top:16px; width:32px; height:32px; border-radius:100px; background:rgba(255,255,255,0.6); backdrop-filter:blur(20px); display:flex; align-items:center; justify-content:center;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="rgb(57,56,56)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+    </button>
+
+    <!-- BOTTOM NAV -->
+    <div style="position:absolute; left:50%; transform:translateX(-50%); bottom:16px; width:333px; height:76px; border-radius:100px; background:rgb(255,255,255); box-shadow:0 0 14px rgba(122,155,187,0.27); display:flex; flex-direction:row; padding:8px 12px; justify-content:space-between; align-items:center; box-sizing:border-box;">
+      <button onclick="{{ goHome }}" style="all:unset; cursor:pointer; width:56px; height:56px; border-radius:100px; display:flex; align-items:center; justify-content:center;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 10.5L12 3l9 7.5M5 9.5V20a1 1 0 001 1h4v-6h4v6h4a1 1 0 001-1V9.5" stroke="rgb(166,165,164)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </button>
+      <button onclick="{{ openMap }}" style="all:unset; cursor:pointer; width:56px; height:56px; border-radius:100px; display:flex; align-items:center; justify-content:center;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 4L3 6.5v14L9 18l6 2.5 6-2.5v-14l-6 2.5L9 4z" stroke="rgb(166,165,164)" stroke-width="1.6" stroke-linejoin="round"></path><path d="M9 4v14M15 6.5v14" stroke="rgb(166,165,164)" stroke-width="1.6"></path></svg>
+      </button>
+      <button onclick="{{ openSheet }}" style="all:unset; cursor:pointer; width:60px; align-self:stretch; border-radius:100px; background:rgb(254,121,98); display:flex; align-items:center; justify-content:center;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 5V19M5 12H19" stroke="rgb(255,255,255)" stroke-width="1.8" stroke-linecap="round"></path></svg>
+      </button>
+      <button onclick="{{ openTasks }}" style="all:unset; cursor:pointer; width:56px; height:56px; border-radius:100px; display:flex; align-items:center; justify-content:center;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="8" height="8" rx="2" stroke="rgb(166,165,164)" stroke-width="1.6"></rect><rect x="13" y="3" width="8" height="8" rx="2" stroke="rgb(166,165,164)" stroke-width="1.6"></rect><rect x="3" y="13" width="8" height="8" rx="2" stroke="rgb(166,165,164)" stroke-width="1.6"></rect><rect x="13" y="13" width="8" height="8" rx="2" stroke="rgb(166,165,164)" stroke-width="1.6"></rect></svg>
+      </button>
+      <button onclick="{{ openProfile }}" style="all:unset; cursor:pointer; width:56px; height:56px; border-radius:100px; display:flex; align-items:center; justify-content:center;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="rgb(166,165,164)" stroke-width="1.6"></circle><path d="M4 20c0-3.5 3.5-6 8-6s8 2.5 8 6" stroke="rgb(166,165,164)" stroke-width="1.6" stroke-linecap="round"></path></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- PROFILE PAGE (slides in from the right, 393x852) -->
+  <div style="{{ profilePanelWrapStyle }}">
+    <div style="position:absolute; inset:0; overflow-y:auto; -webkit-overflow-scrolling:touch; background:rgb(255,255,255);">
+      <div style="position:relative; width:393px; min-height:1826px; overflow:hidden; background:linear-gradient(183.505deg, rgb(73,168,239) -3.15%, rgb(255,255,255) 61.89%); padding-bottom:120px; box-sizing:border-box;">
+
+        <img src="uploads/Frame 2087327621 (2)-c6144388.png" alt="" style="position:absolute; left:20px; top:30px; width:353px; height:416px; object-fit:contain;">
+        <img src="assets/profile-star.svg" alt="" style="position:absolute; left:30px; top:48px; width:26px; height:26px; opacity:0.68;">
+        <img src="assets/profile-star.svg" alt="" style="position:absolute; left:300px; top:40px; width:16px; height:16px; opacity:0.68;">
+        <img src="assets/profile-star.svg" alt="" style="position:absolute; left:341px; top:152px; width:26px; height:26px; opacity:0.68;">
+        <img src="assets/profile-star.svg" alt="" style="position:absolute; left:378px; top:205px; width:20px; height:20px; opacity:0.68;">
+
+
+
+
+
+
+
+
+        <button onclick="{{ refreshFacts }}" style="all:unset; cursor:pointer; position:absolute; left:174px; top:461px; width:44px; height:44px; border-radius:50%; background:rgb(255,255,255); box-shadow:0 1px 12px rgba(13,78,126,0.09); display:flex; align-items:center; justify-content:center;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M20 11A8 8 0 006.5 6.5L4 9M4 4v5h5M4 13a8 8 0 0013.5 4.5L20 15m0 5v-5h-5" stroke="rgb(9,123,208)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </button>
+
+        <div style="position:absolute; left:16px; top:549px; width:361px; height:221px; display:flex; flex-direction:row; gap:12px;">
+          <div style="position:relative; flex-grow:1; flex-basis:0; height:221px; border-radius:20px; overflow:hidden; display:flex; align-items:center; justify-content:center;">
+            <img src="uploads/Frame 2087327546 (1).png" alt="Твои любимки" style="width:100%; height:100%; object-fit:contain;">
+          </div>
+          <div style="position:relative; flex-grow:1; flex-basis:0; height:221px; border-radius:20px; overflow:hidden; display:flex; align-items:center; justify-content:center;">
+            <img src="uploads/Frame 2087327547.png" alt="Твоих меток помогли лапочкам" style="width:100%; height:100%; object-fit:contain;">
+          </div>
+        </div>
+
+        <div style="position:absolute; left:16px; top:834px; width:361px; height:169px; border-radius:20px; background:rgb(255,255,255); box-shadow:0 4px 8px rgba(0,49,84,0.06); box-sizing:border-box; padding:16px;">
+          <span style="display:block; font-weight:600; font-size:20px; line-height:1.2; letter-spacing:-0.02em; color:rgb(57,56,56);">Уровень: новичок</span>
+          <span style="display:block; margin-top:8px; width:241px; font-weight:500; font-size:14px; line-height:1.45; letter-spacing:-0.01em; color:rgb(105,105,105);">Осталось добавить 20 покупок до второго уровня лапочковости</span>
+          <div style="margin-top:12px; height:48px; border-radius:12px; background:rgb(255,232,226); display:flex; align-items:center; justify-content:center;">
+            <span style="font-weight:600; font-size:16px; line-height:1.2; letter-spacing:-0.01em; color:rgb(254,121,98);">Получить еще лапочек!</span>
+          </div>
+        </div>
+
+        <div style="position:absolute; left:16px; top:1051px; width:361px; display:flex; flex-direction:column; gap:24px;">
+          <span style="font-weight:600; font-size:20px; line-height:1.2; letter-spacing:-0.02em; color:rgb(57,56,56);">Коллекция вкусов</span>
+          <div style="display:flex; flex-direction:row; flex-wrap:wrap; gap:8px;">
+            <sc-for list="{{ collectionItems }}" as="item" hint-placeholder-count="15">
+              <div style="position:relative; width:115px; height:163px; border-radius:20px; overflow:hidden; background:{{ item.bg }}; flex-shrink:0;">
+                <sc-if value="{{ item.img }}" hint-placeholder-val="{{ false }}">
+                  <img src="{{ item.img }}" alt="" style="position:absolute; left:20px; top:20px; width:74px; height:193px; object-fit:cover; border-radius:6px;">
+                </sc-if>
+                <sc-if value="{{ item.isIcon }}" hint-placeholder-val="{{ false }}">
+                  <div style="position:absolute; left:11px; top:43px; width:84px; height:78px; background-color:rgb(255,255,255); -webkit-mask-image:url(assets/profile-paw-outline.svg); mask-image:url(assets/profile-paw-outline.svg); -webkit-mask-size:100% 100%; mask-size:100% 100%; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;"></div>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button onclick="{{ closeProfile }}" style="all:unset; cursor:pointer; position:absolute; left:16px; top:16px; width:32px; height:32px; border-radius:100px; background:rgba(255,255,255,0.6); backdrop-filter:blur(20px); display:flex; align-items:center; justify-content:center; z-index:5;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="rgb(57,56,56)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+    </button>
+
+    <!-- BOTTOM NAV -->
+    <div style="position:absolute; left:50%; transform:translateX(-50%); bottom:16px; width:333px; height:76px; border-radius:100px; background:rgb(255,255,255); box-shadow:0 0 14px rgba(122,155,187,0.27); display:flex; flex-direction:row; padding:8px 12px; justify-content:space-between; align-items:center; box-sizing:border-box;">
+      <button onclick="{{ goHome }}" style="all:unset; cursor:pointer; width:56px; height:56px; border-radius:100px; display:flex; align-items:center; justify-content:center;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 10.5L12 3l9 7.5M5 9.5V20a1 1 0 001 1h4v-6h4v6h4a1 1 0 001-1V9.5" stroke="rgb(166,165,164)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </button>
+      <button onclick="{{ openMap }}" style="all:unset; cursor:pointer; width:56px; height:56px; border-radius:100px; display:flex; align-items:center; justify-content:center;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 4L3 6.5v14L9 18l6 2.5 6-2.5v-14l-6 2.5L9 4z" stroke="rgb(166,165,164)" stroke-width="1.6" stroke-linejoin="round"></path><path d="M9 4v14M15 6.5v14" stroke="rgb(166,165,164)" stroke-width="1.6"></path></svg>
+      </button>
+      <button onclick="{{ openSheet }}" style="all:unset; cursor:pointer; width:60px; align-self:stretch; border-radius:100px; background:rgb(254,121,98); display:flex; align-items:center; justify-content:center;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 5V19M5 12H19" stroke="rgb(255,255,255)" stroke-width="1.8" stroke-linecap="round"></path></svg>
+      </button>
+      <button onclick="{{ openTasks }}" style="all:unset; cursor:pointer; width:56px; height:56px; border-radius:100px; display:flex; align-items:center; justify-content:center;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="8" height="8" rx="2" stroke="rgb(166,165,164)" stroke-width="1.6"></rect><rect x="13" y="3" width="8" height="8" rx="2" stroke="rgb(166,165,164)" stroke-width="1.6"></rect><rect x="3" y="13" width="8" height="8" rx="2" stroke="rgb(166,165,164)" stroke-width="1.6"></rect><rect x="13" y="13" width="8" height="8" rx="2" stroke="rgb(166,165,164)" stroke-width="1.6"></rect></svg>
+      </button>
+      <div style="width:56px; height:56px; border-radius:100px; display:flex; align-items:center; justify-content:center;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="rgb(57,56,56)" stroke-width="1.6"></circle><path d="M4 20c0-3.5 3.5-6 8-6s8 2.5 8 6" stroke="rgb(57,56,56)" stroke-width="1.6" stroke-linecap="round"></path></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- TASKS PAGE (slides in from the right, 393x852) -->
+  <div style="{{ tasksPanelWrapStyle }}">
+    <div style="position:absolute; inset:0; overflow-y:auto; -webkit-overflow-scrolling:touch; background:rgb(255,255,255);">
+      <div style="position:relative; width:393px; min-height:1527px; padding-bottom:120px; box-sizing:border-box;">
+
+        <button onclick="{{ closeTasks }}" style="all:unset; cursor:pointer; position:absolute; left:16px; top:16px; width:32px; height:32px; border-radius:100px; background:rgba(255,255,255,0.6); backdrop-filter:blur(20px); display:flex; align-items:center; justify-content:center; z-index:5;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="rgb(57,56,56)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </button>
+
+        <div style="position:absolute; left:16px; top:32px; width:361px; display:flex; flex-direction:column; gap:8px; align-items:center;">
+          <span style="text-align:center; font-weight:600; font-size:24px; line-height:1.2; letter-spacing:-0.02em; color:rgb(57,56,56);">Первая покупка</span>
+          <span style="text-align:center; font-weight:500; font-size:16px; line-height:1.45; letter-spacing:-0.01em; color:rgb(105,105,105);">За первый чекин баночки</span>
+        </div>
+
+
+        <img src="uploads/Mask group (3).png" alt="" style="position:absolute; left:39px; top:110px; width:314px; height:314px; object-fit:contain; z-index:0;">
+        <img src="assets/task-badge-circle.png" alt="" style="position:absolute; left:77px; top:148px; width:238px; height:238px; border-radius:50%; object-fit:cover;">
+        <div style="position:absolute; left:-60px; top:255px; width:111px; height:111px; background-image:url('uploads/Star 10 (2).png'); background-size:cover; display:flex; align-items:center; justify-content:center;">
+        </div>
+        <div style="position:absolute; left:342px; top:255px; width:111px; height:111px; background-image:url('uploads/Star 10 (2).png'); background-size:cover; transform:scaleX(-1); display:flex; align-items:center; justify-content:center;">
+        </div>
+
+        <div style="position:absolute; left:16px; top:430px; width:361px;">
+          <button onclick="{{ closeTasks }}" style="all:unset; cursor:pointer; box-sizing:border-box; display:block; width:361px; height:64px; border-radius:100px; background:rgb(254,121,98); text-align:center; line-height:64px; font-weight:600; font-size:16px; letter-spacing:-0.01em; color:rgb(255,255,255);">Смотреть все награды</button>
+        </div>
+
+        <div style="position:absolute; left:16px; top:540px; width:361px; display:flex; flex-direction:column; gap:24px; align-items:center;">
+          <div style="display:flex; flex-direction:column; gap:8px; align-items:center; align-self:stretch;">
+            <span style="text-align:center; font-weight:600; font-size:24px; line-height:1.2; letter-spacing:-0.02em; color:rgb(0,0,0);">Задания недели</span>
+            <span style="text-align:center; font-weight:500; font-size:16px; line-height:1.45; letter-spacing:-0.01em; color:rgb(105,105,105);">Выполняй задания, собирай лапки и открывай новые достижения</span>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:16px; align-items:flex-start; align-self:stretch;">
+            <div style="display:flex; flex-direction:row; gap:8px; align-items:center; align-self:stretch; overflow-x:auto;">
+              <sc-for list="{{ taskChips }}" as="chip" hint-placeholder-count="4">
+                <div style="flex-shrink:0; box-sizing:border-box; height:{{ chip.h }}px; padding:8px 16px; border-radius:24px; background:{{ chip.bg }}; display:flex; align-items:center; justify-content:center;">
+                  <span style="white-space:nowrap; font-weight:{{ chip.weight }}; font-size:16px; letter-spacing:-0.01em; color:{{ chip.color }};">{{ chip.label }}</span>
+                </div>
+              </sc-for>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:12px; align-items:flex-start; align-self:stretch;">
+              <sc-for list="{{ tasks }}" as="task" hint-placeholder-count="5">
+                <div style="position:relative; box-sizing:border-box; width:100%; min-height:127px; border-radius:20px; background:rgb(245,244,244); display:flex; flex-direction:row; gap:16px; padding:6px 16px 6px 6px; align-items:flex-start;">
+
+                  <sc-if value="{{ task.claimable }}" hint-placeholder-val="{{ false }}">
+                    <div style="width:100%; box-sizing:border-box; padding:12px 0 12px 10px; display:flex; flex-direction:column; gap:16px;">
+                      <div style="display:flex; flex-direction:column; gap:8px;">
+                        <span style="font-weight:600; font-size:16px; letter-spacing:-0.01em; color:rgb(0,0,0);">{{ task.title }}</span>
+                        <span style="font-weight:500; font-size:14px; letter-spacing:-0.01em; color:rgb(105,105,105);">{{ task.statusLabel }}</span>
+                      </div>
+                      <div style="height:44px; border-radius:12px; background:rgb(254,121,98); display:flex; flex-direction:row; gap:4px; align-items:center; justify-content:center;">
+                        <span style="font-weight:600; font-size:14px; letter-spacing:-0.01em; color:rgb(255,255,255);">{{ task.ctaLabel }}</span>
+                        <img src="assets/task-paw-cta-icon.svg" alt="" style="width: 20px; height: 20px; filter:brightness(0) invert(1);">
+                      </div>
+                    </div>
+                  </sc-if>
+
+                  <sc-if value="{{ task.thumb }}" hint-placeholder-val="{{ false }}">
+                    <div style="position:relative; width:114px; height:115px; border-radius:16px; overflow:hidden; background:rgb(255,255,255); flex-shrink:0; margin-top:20px;">
+                      <img src="{{ task.thumb }}" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+                      <sc-if value="{{ task.pinIcon }}" hint-placeholder-val="{{ false }}">
+                        <img src="uploads/Vector (1).png" alt="" style="position:absolute; left:38px; top:42px; width:36px; height:52px;">
+                      </sc-if>
+                    </div>
+                  </sc-if>
+
+                  <sc-if value="{{ task.collage }}" hint-placeholder-val="{{ false }}">
+                    <div style="position:relative; width:114px; height:115px; border-radius:16px; overflow:hidden; background:rgb(255,255,255); flex-shrink:0; display:flex; flex-direction:row;">
+                      <img src="assets/task-collage-1.png" alt="" style="width:38px; height:99px; object-fit:cover; align-self:center;">
+                      <img src="assets/task-collage-2.png" alt="" style="width:38px; height:99px; object-fit:cover; align-self:center;">
+                      <img src="assets/task-collage-3.png" alt="" style="width:38px; height:99px; object-fit:cover; align-self:center;">
+                      <img src="assets/task-collage-4.png" alt="" style="width:38px; height:99px; object-fit:cover; align-self:center;">
+                      <img src="assets/task-collage-5.png" alt="" style="width:38px; height:99px; object-fit:cover; align-self:center;">
+                    </div>
+                  </sc-if>
+
+                  <sc-if value="{{ task.hasProgress }}" hint-placeholder-val="{{ false }}">
+                    <div style="position:relative; flex-grow:1; display:flex; flex-direction:column; gap:7px; padding:12px 40px 6px 0; box-sizing:border-box;">
+                      <span style="font-weight:600; font-size:16px; line-height:1.15; letter-spacing:-0.01em; color:rgb(0,0,0); white-space:pre-line;">{{ task.title }}</span>
+                      <div style="flex-grow:1; display:flex; flex-direction:column; justify-content:flex-end; gap:8px;">
+                        <sc-if value="{{ task.progressLabel }}" hint-placeholder-val="{{ false }}">
+                          <span style="font-weight:600; font-size:12px; letter-spacing:-0.01em; color:rgb(105,105,105);">{{ task.progressLabel }}</span>
+                        </sc-if>
+                        <div style="display:flex; flex-direction:row; gap:4px; align-items:center;">
+                          <sc-for list="{{ task.barArr }}" as="bar" hint-placeholder-count="3">
+                            <div style="height:4px; border-radius:4px; background:rgb(223,223,223); flex-grow:1;"></div>
+                          </sc-for>
+                        </div>
+                      </div>
+                    </div>
+                  </sc-if>
+
+                  <sc-if value="{{ task.reward }}" hint-placeholder-val="{{ false }}">
+                    <div style="position:absolute; right:10px; top:14px; width:70px; height:58px; transform:rotate(-6deg); display:flex; align-items:center; justify-content:center;">
+                      <img src="uploads/Group 1948758234 (1).png" alt="" style="width:100%; height:100%; object-fit:contain;">
+                    </div>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM NAV -->
+    <div style="position:absolute; left:50%; transform:translateX(-50%); bottom:16px; width:333px; height:76px; border-radius:100px; background:rgb(255,255,255); box-shadow:0 0 14px rgba(122,155,187,0.27); display:flex; flex-direction:row; padding:8px 12px; justify-content:space-between; align-items:center; box-sizing:border-box;">
+      <button onclick="{{ goHome }}" style="all:unset; cursor:pointer; width:56px; height:56px; border-radius:100px; display:flex; align-items:center; justify-content:center;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 10.5L12 3l9 7.5M5 9.5V20a1 1 0 001 1h4v-6h4v6h4a1 1 0 001-1V9.5" stroke="rgb(166,165,164)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </button>
+      <button onclick="{{ openMap }}" style="all:unset; cursor:pointer; width:56px; height:56px; border-radius:100px; display:flex; align-items:center; justify-content:center;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 4L3 6.5v14L9 18l6 2.5 6-2.5v-14l-6 2.5L9 4z" stroke="rgb(166,165,164)" stroke-width="1.6" stroke-linejoin="round"></path><path d="M9 4v14M15 6.5v14" stroke="rgb(166,165,164)" stroke-width="1.6"></path></svg>
+      </button>
+      <button onclick="{{ openSheet }}" style="all:unset; cursor:pointer; width:60px; align-self:stretch; border-radius:100px; background:rgb(254,121,98); display:flex; align-items:center; justify-content:center;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 5V19M5 12H19" stroke="rgb(255,255,255)" stroke-width="1.8" stroke-linecap="round"></path></svg>
+      </button>
+      <div style="width:56px; height:56px; border-radius:100px; display:flex; align-items:center; justify-content:center;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="8" height="8" rx="2" stroke="rgb(57,56,56)" stroke-width="1.6"></rect><rect x="13" y="3" width="8" height="8" rx="2" stroke="rgb(57,56,56)" stroke-width="1.6"></rect><rect x="3" y="13" width="8" height="8" rx="2" stroke="rgb(57,56,56)" stroke-width="1.6"></rect><rect x="13" y="13" width="8" height="8" rx="2" stroke="rgb(57,56,56)" stroke-width="1.6"></rect></svg>
+      </div>
+      <button onclick="{{ openProfile }}" style="all:unset; cursor:pointer; width:56px; height:56px; border-radius:100px; display:flex; align-items:center; justify-content:center;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="rgb(166,165,164)" stroke-width="1.6"></circle><path d="M4 20c0-3.5 3.5-6 8-6s8 2.5 8 6" stroke="rgb(166,165,164)" stroke-width="1.6" stroke-linecap="round"></path></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- BOTTOM SHEET MODAL -->
+  <sc-if value="{{ sheetOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute; inset:0; z-index:20;">
+      <div onclick="{{ closeSheet }}" style="position:absolute; inset:0; background:rgba(0,0,0,0.4);"></div>
+      <div style="position:absolute; left:0; bottom:0; width:393px; box-sizing:border-box; border-radius:32px 32px 0 0; background:rgb(255,255,255); display:flex; flex-direction:column; gap:32px; padding:32px 16px 24px 16px; align-items:center;">
+        <div style="display:flex; flex-direction:column; gap:16px; align-items:center;">
+          <span style="width:276px; text-align:center; font-weight:600; font-size:24px; line-height:1.2; color:rgb(57,56,56);">Твои первые лапки уже ждут</span>
+          <span style="text-align:center; font-weight:500; font-size:16px; line-height:1.45; letter-spacing:-0.01em; color:rgb(105,105,105);">Прикрепи чек за покупку Лапочки и получи 10 лапок для обмена на призы, события и другие сюрпризы</span>
+        </div>
+        <button style="all:unset; cursor:pointer; box-sizing:border-box; width:100%; height:64px; border-radius:100px; background:rgb(254,121,98); display:flex; align-items:center; justify-content:center;">
+          <span style="font-weight:600; font-size:16px; letter-spacing:-0.01em; color:rgb(255,255,255);">Добавить покупку</span>
+        </button>
+        <button onclick="{{ closeSheet }}" style="all:unset; cursor:pointer; position:absolute; right:16px; top:16px; width:28px; height:28px; border-radius:100px; background:rgb(245,245,245); display:flex; align-items:center; justify-content:center;">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1 1L9 9M9 1L1 9" stroke="rgb(166,165,164)" stroke-width="1.3" stroke-linecap="round"></path></svg>
+        </button>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 393, &quot;height&quot;: 900}, &quot;galleryLayout&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;masonry&quot;, &quot;options&quot;: [&quot;masonry&quot;, &quot;grid&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Layout&quot;}, &quot;openSheetByDefault&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Behavior&quot;}}">
+class Component extends DCLogic {
+  state = { sheetOpen: false, mapOpen: false, catalogOpen: false, profileOpen: false, tasksOpen: false, mapShowAll: true };
+
+  componentDidMount() {
+    if (this.props.openSheetByDefault) this.setState({ sheetOpen: true });
+  }
+
+  renderVals() {
+    const layout = this.props.galleryLayout ?? "masonry";
+    return {
+      sheetOpen: this.state.sheetOpen,
+      openSheet: () => this.setState({ sheetOpen: true }),
+      closeSheet: () => this.setState({ sheetOpen: false }),
+      isMasonry: layout === "masonry",
+      isGrid: layout === "grid",
+      goHome: () => this.setState({ sheetOpen: false, mapOpen: false, catalogOpen: false, profileOpen: false, tasksOpen: false }),
+      openTasks: () => this.setState({ tasksOpen: true }),
+      closeTasks: () => this.setState({ tasksOpen: false }),
+      tasksPanelWrapStyle: { position: "absolute", inset: 0, zIndex: 18, pointerEvents: this.state.tasksOpen ? "auto" : "none", transform: this.state.tasksOpen ? "translateX(0)" : "translateX(100%)", transition: "transform 0.32s cubic-bezier(0.32,0.72,0,1)" },
+      taskChips: [
+        { label: "Все", bg: "rgb(254,121,98)", color: "rgb(255,255,255)", weight: 600, h: 39 },
+        { label: "Активные", bg: "transparent", color: "rgb(57,56,56)", weight: 500, h: 37 },
+        { label: "Выполненные", bg: "transparent", color: "rgb(57,56,56)", weight: 500, h: 37 },
+        { label: "Новые", bg: "transparent", color: "rgb(57,56,56)", weight: 500, h: 37 },
+      ],
+      tasks: [
+        { title: "Зачекинь первую баночку lapochka", claimable: true, statusLabel: "Выполнено", ctaLabel: "Забрать 10" },
+        { title: "Закажи 2 коробки по 6 вкусов на Ozon", thumb: "assets/task-thumb-lapochka6.png", hasProgress: true, progressLabel: "Ещё 2", barArr: [1, 2], reward: 50 },
+        { title: "Добавь на карту метку с Манго + Чили", thumb: "assets/task-thumb-mango.jpg", hasProgress: true, progressLabel: null, barArr: [1], reward: 10 },
+        { title: "Добавь на карту\n3 новых отметки", thumb: "assets/task-thumb-map.png", pinIcon: true, hasProgress: true, progressLabel: "Ещё 3", barArr: [1, 2, 3], reward: 25 },
+        { title: "Собери всю Советскую линейку", collage: true, hasProgress: true, progressLabel: "Ещё 3", barArr: [1, 2, 3], reward: 25 },
+      ],
+      openProfile: () => this.setState({ profileOpen: true }),
+      closeProfile: () => this.setState({ profileOpen: false }),
+      profilePanelWrapStyle: { position: "absolute", inset: 0, zIndex: 17, pointerEvents: this.state.profileOpen ? "auto" : "none", transform: this.state.profileOpen ? "translateX(0)" : "translateX(100%)", transition: "transform 0.32s cubic-bezier(0.32,0.72,0,1)" },
+      profileFacts: [
+        { text: "Столько лапочки вместится в большой промышленный пылесос" },
+        { text: "Прямо как у переноски для очень крупного собакена" },
+        { text: "Столько lapochka вместится в топливный бак грузового автомобиля" },
+      ],
+      refreshFacts: () => { const el = document.getElementById("factCarousel"); if (el) el.scrollTo({ left: 0, behavior: "smooth" }); },
+      collectionItems: [
+        { bg: "rgb(245,212,110)", img: "assets/profile-bottle1.png" },
+        { bg: "rgb(255,148,115)", img: "assets/profile-collection-photo.png" },
+        { bg: "rgb(213,67,67)", img: "assets/profile-bottle2.png" },
+        { bg: "rgb(157,183,91)", img: "assets/profile-collection-photo.png" },
+        ...Array.from({ length: 11 }, () => ({ bg: "rgb(234,234,234)", isIcon: true })),
+      ],
+      openMap: () => this.setState({ mapOpen: true }),
+      mapShowAll: this.state.mapShowAll,
+      toggleGrapefruitFilter: () => this.setState(s => ({ mapShowAll: !s.mapShowAll })),
+      closeMap: () => this.setState({ mapOpen: false }),
+      mapPanelWrapStyle: { position: "absolute", inset: 0, zIndex: 15, pointerEvents: this.state.mapOpen ? "auto" : "none", transform: this.state.mapOpen ? "translateX(0)" : "translateX(100%)", transition: "transform 0.32s cubic-bezier(0.32,0.72,0,1)" },
+      mapStrip: [{ img: "assets/strip-peach.png" }, { img: "assets/strip-pineapple.png" }, { img: "assets/strip-grapefruit.png" }, { img: "assets/strip-olive.png" }, { img: "assets/strip-mango.png" }],
+      openCatalog: () => this.setState({ catalogOpen: true }),
+      closeCatalog: () => this.setState({ catalogOpen: false }),
+      catalogPanelWrapStyle: { position: "absolute", inset: 0, zIndex: 16, pointerEvents: this.state.catalogOpen ? "auto" : "none", transform: this.state.catalogOpen ? "translateX(0)" : "translateX(100%)", transition: "transform 0.32s cubic-bezier(0.32,0.72,0,1)" },
+      catalogCards: [
+        { name: "Физзи рислинг", img: "assets/catalog-card1.png" },
+        { name: "Персик + Вербена", img: "assets/catalog-card2.png" },
+        { name: "Манго +\nЧили", img: "assets/catalog-card3.jpg" },
+        { name: "Арбуз + Мелисса", img: "assets/catalog-card4.png" },
+        { name: "Ананас + Личи", img: "assets/catalog-card5.png" },
+        { name: "Дыня + Мята", img: "assets/catalog-card6.png" },
+        { name: "Физзи \nрозе", img: "assets/catalog-card7.png" },
+      ],
+      flavors: [
+        { name: "Персик Вербена", img: "assets/card1.jpg" },
+        { name: "Манго\nЧили", img: "assets/card2.jpg" },
+        { name: "Персик Вербена", img: "assets/card3.png" },
+        { name: "Персик Вербена", img: "assets/card4.png" },
+        { name: "Персик Вербена", img: "assets/card5.png" },
+        { name: "Персик Вербена", img: "assets/card6.png" },
+      ],
+      gallery: [
+        { img: "assets/gallery0.jpg", span: "span 2" },
+        { img: "assets/gallery1.jpg", span: "span 1" },
+        { img: "assets/gallery2.png", span: "span 1" },
+        { img: "assets/gallery3.jpg", span: "span 2" },
+        { img: "assets/gallery4.jpg", span: "span 1" },
+        { img: "assets/gallery5.jpg", span: "span 2" },
+        { img: "assets/gallery6.png", span: "span 1" },
+        { img: "assets/gallery7.png", span: "span 1" },
+      ],
+    };
+  }
+}
+
+</script>
+</body>
 </html>

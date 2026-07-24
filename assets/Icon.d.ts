@@ -1,0 +1,16 @@
+import * as React from 'react';
+export type IconName =
+  | "IconsNameHomeStateActive"
+  | "IconsNameHomeStateDefault"
+  | "IconsNameMapStateActive"
+  | "IconsNameMapStateDefault"
+  | "IconsNameTaskSquareStateActive"
+  | "IconsNameTaskSquareStateDefault"
+  | "IconsNameUserStateActive"
+  | "IconsNameUserStateDefault";
+export interface IconProps extends React.SVGProps<SVGSVGElement> {
+  name: IconName;
+  size?: number | string;
+}
+export declare const Icon: React.FC<IconProps>;
+export default Icon;
