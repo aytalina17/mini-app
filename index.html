@@ -450,7 +450,7 @@
                   </sc-if>
 
                   <sc-if value="{{ task.hasProgress }}" hint-placeholder-val="{{ false }}">
-                    <div style="position:relative; flex-grow:1; display:flex; flex-direction:column; gap:7px; padding:12px 40px 6px 0; box-sizing:border-box;">
+                    <div style="position:relative; flex-grow:1; align-self:stretch; display:flex; flex-direction:column; gap:7px; padding:12px 40px 6px 0; box-sizing:border-box;">
                       <span style="font-weight:600; font-size:16px; line-height:1.15; letter-spacing:-0.01em; color:rgb(0,0,0); white-space:pre-line;">{{ task.title }}</span>
                       <div style="flex-grow:1; display:flex; flex-direction:column; justify-content:flex-end; gap:8px;">
                         <sc-if value="{{ task.progressLabel }}" hint-placeholder-val="{{ false }}">
@@ -466,7 +466,7 @@
                   </sc-if>
 
                   <sc-if value="{{ task.reward }}" hint-placeholder-val="{{ false }}">
-                    <div style="position:absolute; right:10px; top:14px; width:70px; height:58px; transform:rotate(-6deg); display:flex; align-items:center; justify-content:center;">
+                    <div style="position:absolute; right:10px; bottom:14px; width:70px; height:58px; transform:rotate(-6deg); display:flex; align-items:center; justify-content:center;">
                       <img src="uploads/Group 1948758234 (1).png" alt="" style="width:100%; height:100%; object-fit:contain;">
                     </div>
                   </sc-if>
